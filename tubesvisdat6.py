@@ -83,8 +83,8 @@ feature_select = Select(options = col_list[2:], value = 'Total Cases', title = '
 feature_select.on_change('value', update_feature)
 
 #fitur 2
-feature_select = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature 2')
-feature_select.on_change('value', update_feature)
+feature_select2 = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature 2')
+feature_select2.on_change('value', update_feature)
 
 #end fitur 2
 
