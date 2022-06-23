@@ -11,10 +11,10 @@ from bokeh.layouts import column, row, WidgetBox
 
 df = pd.read_csv("./data/covid_19_indonesia_time_series_all.csv")
 df["Date"] = pd.to_datetime(df["Date"])
-data = df[df["Island"].str.contains("Indonesia")==False]
-data = data[['Date', 'Island', 'Total Cases', 'Total Deaths', 'Total Recovered', 'Total Active Cases']]
+data = df[df["Location"].str.contains("Indonesia")==False]
+data = data[['Date', 'Location', 'Total Cases', 'Total Deaths', 'Total Recovered', 'Total Active Cases']]
 
-lokasi = list(data.Island.unique())
+lokasi = list(data.Location.unique())
 
 col_list = list(data.columns)
 
@@ -28,7 +28,7 @@ def make_dataset(lokasi, feature):
 
     for i, lokasi in enumerate(lokasi):
 
-        df = data[data['Island'] == lokasi].reset_index(drop = True)
+        df = data[data['Location'] == lokasi].reset_index(drop = True)
         
         x = list(df['Date'])
         y = list(df[feature])
