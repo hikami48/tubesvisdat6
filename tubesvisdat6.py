@@ -6,7 +6,7 @@ from bokeh.models import ColumnDataSource, HoverTool, Select
 from bokeh.models.widgets import Tabs, Panel
 from bokeh.layouts import row, widgetbox
 from bokeh.palettes import Category20_16
-from bokeh.models.widgets import CheckboxGroup, Slider, RangeSlider, Tabs, NumeralTickFormatter
+from bokeh.models.widgets import CheckboxGroup, Slider, RangeSlider, Tabs
 from bokeh.layouts import column, row, WidgetBox
 
 df = pd.read_csv("./data/covid_19_indonesia_time_series_all.csv")
@@ -42,8 +42,7 @@ def make_dataset(lokasi, feature):
     new_src = ColumnDataSource(data={'x': xs, 'y': ys, 'color': colors, 'label': labels})
 
     return new_src
-df_province = data.groupby(['Location']).sum()
-df_province = df_province.reset_index()
+
 def make_plot(src, feature):
     
     p = figure(plot_width = 700, plot_height = 400, 
@@ -60,7 +59,6 @@ def make_plot(src, feature):
     p.add_tools(HoverTool(tooltips=tooltips))
 
     return p
-
 
 
 def update_country(attr, old, new):
@@ -92,9 +90,8 @@ src = make_dataset(initial_country, feature_select.value)
 
 p = make_plot(src, feature_select.value)
 
-
-
 controls = WidgetBox(feature_select, lokasi_selection)
+
 # Create a row layout
 layout = row(controls, p)
 
