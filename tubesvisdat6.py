@@ -6,7 +6,7 @@ from bokeh.models import ColumnDataSource, HoverTool, Select,NumeralTickFormatte
 from bokeh.models.widgets import Tabs, Panel
 from bokeh.layouts import row, widgetbox
 from bokeh.palettes import Category20_16
-from bokeh.models.widgets import CheckboxGroup, Slider, RangeSlider, Tabs,CustomJS, Dropdown,RadioGroup
+from bokeh.models.widgets import CheckboxGroup, Slider, RangeSlider, Tabs,CustomJS, Dropdown
 from bokeh.layouts import column, row, WidgetBox
 
 df = pd.read_csv("./data/covid_19_indonesia_time_series_all.csv")
@@ -96,9 +96,8 @@ def update_feature(attr, old, new):
 
     src.data.update(new_src.data)
 
-
-lokasi_selection  = RadioGroup(labels=lokasi, active=0)
-lokasi_selection.on_change('value', update_country)
+lokasi_selection = CheckboxGroup(labels=lokasi, active = [0])
+lokasi_selection.on_change('active', update_country)
 
 feature_select = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature Select')
 feature_select.on_change('value', update_feature)
