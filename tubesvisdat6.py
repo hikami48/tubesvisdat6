@@ -112,6 +112,6 @@ controls = WidgetBox(feature_select, lokasi_selection)
 
 # Create a row layout
 layout = row(controls, p)
-Tabs = Tabs(Tabs=[layout,bar])
+
 #Adding the layout to the current document
-curdoc().add_root(Tabs)
+curdoc().add_root(bar)
