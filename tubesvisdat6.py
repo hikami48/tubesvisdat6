@@ -11,10 +11,10 @@ from bokeh.layouts import column, row, WidgetBox
 
 df = pd.read_csv("./data/covid_19_indonesia_time_series_all.csv")
 df["Date"] = pd.to_datetime(df["Date"])
-data = df[df["Location"].str.contains("Indonesia")==False]
-data = data[['Date', 'Location', 'Total Cases', 'Total Deaths', 'Total Recovered', 'Total Active Cases']]
+data = df[df["Island"].str.contains("Indonesia")==False]
+data = data[['Date', 'Island', 'Total Cases', 'Total Deaths', 'Total Recovered', 'Total Active Cases']]
 
-lokasi = list(data.Location.unique())
+lokasi = list(data.Island.unique())
 
 col_list = list(data.columns)
 
@@ -28,7 +28,7 @@ def make_dataset(lokasi, feature):
 
     for i, lokasi in enumerate(lokasi):
 
-        df = data[data['Location'] == lokasi].reset_index(drop = True)
+        df = data[data['Island'] == lokasi].reset_index(drop = True)
         
         x = list(df['Date'])
         y = list(df[feature])
@@ -44,10 +44,9 @@ def make_dataset(lokasi, feature):
     return new_src
 
 def make_plot(src, feature):
-    
     p = figure(plot_width = 700, plot_height = 400, 
             title = 'Covid19-Indonesia All Time Series',
-            x_axis_label = 'Date', y_axis_label = 'Feature Selected')
+            x_axis_label = 'date', y_axis_label = 'Feature Selected')
 
     p.multi_line('x', 'y', color = 'color', legend_field = 'label', line_width = 2, source = src)
     
