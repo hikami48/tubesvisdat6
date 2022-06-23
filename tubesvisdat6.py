@@ -94,12 +94,6 @@ def tab_barplot(data):
 
     plots.x_range.start = 0
     plots.xaxis.formatter = NumeralTickFormatter(format="0")
-    tooltips = [
-            ('Location','$y'),
-            ('Total Case', '$right'),
-           ]
-    
-    plots.add_tools(HoverTool(tooltips=tooltips))
     
     
     return Panel(child=plots, title="BAR PLOT")
