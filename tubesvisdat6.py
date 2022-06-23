@@ -26,11 +26,6 @@ def make_dataset(lokasi, feature, feature2):
     colors = []
     labels = []
 
-    #edit
-    xs2 = []
-    ys2 = []
-    colors2 = []
-    labels2 = []
 
     for i, lokasi in enumerate(lokasi):
 
@@ -45,17 +40,9 @@ def make_dataset(lokasi, feature, feature2):
         colors.append(Category20_16[i])
         labels.append(lokasi)
 
-        #edit
-        x2 = list(df['Date'])
-        y2 = list(df[feature])
-        
-        xs2.append(list(x))
-        ys2.append(list(y))
 
-        colors2.append(Category20_16[i])
-        labels2.append(lokasi)
 
-    new_src = ColumnDataSource(data={'x': xs, 'y': ys, 'color': colors, 'label': labels, 'x2': xs, 'y2': ys, 'color2': colors, 'label2': labels})
+    new_src = ColumnDataSource(data={'x': xs, 'y': ys, 'color': colors, 'label': labels})
 
     return new_src
 
@@ -106,10 +93,8 @@ initial_country = [lokasi_selection.labels[i] for i in lokasi_selection.active]
 
 src = make_dataset(initial_country, feature_select.value)
 
-#edit
-src2 = make_dataset(initial_country, feature_select2.value)
 
-p = make_plot(src, src2, feature_select.value)
+p = make_plot(src, feature_select.value)
 #edit
 
 
