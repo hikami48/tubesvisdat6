@@ -63,7 +63,7 @@ def update_country(attr, old, new):
     lokasi_plot = [lokasi_selection.labels[i] for i in lokasi_selection.active]
 
     
-    new_src = make_dataset(lokasi_plot, feature_select.value)
+    new_src = make_dataset(lokasi_plot, feature_select.value,feature_select2.value)
 
     src.data.update(new_src.data)
 
@@ -71,6 +71,7 @@ def update_feature(attr, old, new):
     lokasi_plot = [lokasi_selection.labels[i] for i in lokasi_selection.active]
     
     feature = feature_select.value
+    feature2 = feature_select2.value
     
     new_src = make_dataset(lokasi_plot, feature)
 
@@ -83,18 +84,18 @@ feature_select = Select(options = col_list[2:], value = 'Total Cases', title = '
 feature_select.on_change('value', update_feature)
 
 #fitur 2
-feature_select = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature 2')
-feature_select.on_change('value', update_feature)
+feature_select2 = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature 2')
+feature_select2.on_change('value', update_feature)
 
 #end fitur 2
 
 initial_country = [lokasi_selection.labels[i] for i in lokasi_selection.active]
 
-src = make_dataset(initial_country, feature_select.value)
+src = make_dataset(initial_country, feature_select.value,feature_select2.value)
 
-p = make_plot(src, feature_select.value)
+p = make_plot(src,feature_select2.value,feature_select.value)
 
-controls = WidgetBox(feature_select, lokasi_selection)
+controls = WidgetBox(feature_select,feature_select2, lokasi_selection)
 
 # Create a row layout
 layout = row(controls, p)
