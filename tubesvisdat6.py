@@ -5,9 +5,8 @@ from bokeh.io import curdoc
 from bokeh.models import ColumnDataSource, HoverTool, Select
 from bokeh.models.widgets import Tabs, Panel
 from bokeh.layouts import row, widgetbox
-from datetime import datetime as date
 from bokeh.palettes import Category20_16
-from bokeh.models.widgets import CheckboxGroup,Slider, RangeSlider,DateRangeSlider,Tabs
+from bokeh.models.widgets import CheckboxGroup, Slider, RangeSlider, Tabs
 from bokeh.layouts import column, row, WidgetBox
 
 df = pd.read_csv("./data/covid_19_indonesia_time_series_all.csv")
@@ -79,10 +78,6 @@ def update_feature(attr, old, new):
 
 lokasi_selection = CheckboxGroup(labels=lokasi, active = [0])
 lokasi_selection.on_change('active', update_country)
-
-feature_select = DateRangeSlider(value=(date(3, 1, 2020), date(10, 2, 2020)),
-                                    start=date(3, 1, 2020), end=date(12, 3, 2021))
-feature_select.on_change('value', update_feature)
 
 feature_select = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature Select')
 feature_select.on_change('value', update_feature)
