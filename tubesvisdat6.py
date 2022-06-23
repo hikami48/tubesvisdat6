@@ -18,13 +18,19 @@ lokasi = list(data.Location.unique())
 
 col_list = list(data.columns)
 
-def make_dataset(lokasi, feature):
+def make_dataset(lokasi, feature, feature2):
 
     
     xs = []
     ys = []
     colors = []
     labels = []
+
+    #edit
+    xs2 = []
+    ys2 = []
+    colors2 = []
+    labels2 = []
 
     for i, lokasi in enumerate(lokasi):
 
@@ -39,17 +45,27 @@ def make_dataset(lokasi, feature):
         colors.append(Category20_16[i])
         labels.append(lokasi)
 
-    new_src = ColumnDataSource(data={'x': xs, 'y': ys, 'color': colors, 'label': labels})
+        #edit
+        x2 = list(df['Date'])
+        y2 = list(df[feature])
+        
+        xs2.append(list(x))
+        ys2.append(list(y))
+
+        colors2.append(Category20_16[i])
+        labels2.append(lokasi)
+
+    new_src = ColumnDataSource(data={'x': xs, 'y': ys, 'color': colors, 'label': labels, 'x2': xs, 'y2': ys, 'color2': colors, 'label2': labels})
 
     return new_src
 
-def make_plot(src, feature):
+def make_plot(src, src2, feature):
     p = figure(plot_width = 700, plot_height = 400, 
             title = 'Covid19-Indonesia All Time Series',
             x_axis_label = 'date', y_axis_label = 'Feature Selected')
 
     p.multi_line('x', 'y', color = 'color', legend_field = 'label', line_width = 2, source = src)
-    
+    p.multi_line('x', 'y', color = 'color', legend_field = 'label', line_width = 2, source = src2)
     tooltips = [
             ('Date','$x'),
             ('Total', '$y'),
@@ -82,7 +98,7 @@ lokasi_selection.on_change('active', update_country)
 feature_select = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature Select')
 feature_select.on_change('value', update_feature)
 
-feature_select2 = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature Select 2')
+feature_select2 = Select(options = col_list[2:], value = 'Total Deaths', title = 'Feature Select 2')
 feature_select2.on_change('value', update_feature)
 
 
@@ -90,7 +106,12 @@ initial_country = [lokasi_selection.labels[i] for i in lokasi_selection.active]
 
 src = make_dataset(initial_country, feature_select.value)
 
-p = make_plot(src, feature_select.value)
+#edit
+src2 = make_dataset(initial_country, feature_select2.value)
+
+p = make_plot(src, src2, feature_select.value)
+#edit
+
 
 controls = WidgetBox(feature_select,feature_select2, lokasi_selection)
 
