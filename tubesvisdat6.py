@@ -61,21 +61,6 @@ def make_plot(src, feature):
 
     return p
 
-def tab_barplot(data):
-    
-    source = ColumnDataSource(data)
-    p = figure(y_range=data['Location'], 
-               title="Jumlah Kasus Tiap Provinsi",
-               plot_height=800,
-               plot_width=800,
-               toolbar_location=None)
-
-    p.hbar(y='Location', right='Total Cases', source=source, height=1)
-
-    p.x_range.start = 0
-    p.xaxis.formatter = NumeralTickFormatter(format="0")
-    
-    return Panel(child=p, title="BAR PLOT")
 
 
 def update_country(attr, old, new):
@@ -107,11 +92,11 @@ src = make_dataset(initial_country, feature_select.value)
 
 p = make_plot(src, feature_select.value)
 
-bar = tab_barplot(df_province)
+
 
 controls = WidgetBox(feature_select, lokasi_selection)
 # Create a row layout
 layout = row(controls, p)
-tabs = Tabs(tabs=[layout,bar])
+
 #Adding the layout to the current document
 curdoc().add_root(layout)
