@@ -110,9 +110,8 @@ p = make_plot(src, feature_select.value)
 bar = tab_barplot(df_province)
 
 controls = WidgetBox(feature_select, lokasi_selection)
-tabs = Tabs(tabs=[controls,bar])
 # Create a row layout
 layout = row(controls, p)
-
+tabs = Tabs(tabs=[layout,bar])
 #Adding the layout to the current document
 curdoc().add_root(tabs)
