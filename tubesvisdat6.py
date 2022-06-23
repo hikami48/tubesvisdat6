@@ -20,11 +20,11 @@ lokasi = list(data.Location.unique())
 
 col_list = list(data.columns)
 
-def make_dataset(lokasi, feature):
+def make_dataset(lokasi, fitur):
 
     
-    xs = []
-    ys = []
+    xAray = []
+    yAray = []
     colors = []
     labels = []
 
@@ -33,34 +33,34 @@ def make_dataset(lokasi, feature):
         df = data[data['Location'] == lokasi].reset_index(drop = True)
         
         x = list(df['Date'])
-        y = list(df[feature])
+        y = list(df[fitur])
         
-        xs.append(list(x))
-        ys.append(list(y))
+        xAray.append(list(x))
+        yAray.append(list(y))
 
         colors.append(Category20_16[i])
         labels.append(lokasi)
 
-    new_src = ColumnDataSource(data={'x': xs, 'y': ys, 'color': colors, 'label': labels})
+    new_src = ColumnDataSource(data={'x': xAray, 'y': yAray, 'color': colors, 'label': labels})
 
     return new_src
 
-def make_plot(src, feature):
+def make_plot(src, fitur):
     
-    p = figure(plot_width = 700, plot_height = 400, 
+    plots = figure(plot_width = 700, plot_height = 400, 
             title = 'Kasus Covid-19 di Indonesia',
-            x_axis_label = 'Date', y_axis_label = 'Feature Selected')
+            x_axis_label = 'Date', y_axis_label = 'fitur Selected')
 
-    p.multi_line('x', 'y', color = 'color', legend_field = 'label', line_width = 2, source = src)
+    plots.multi_line('x', 'y', color = 'color', legend_field = 'label', line_width = 2, source = src)
     
     tooltips = [
             ('Date','$x'),
             ('Total', '$y'),
            ]
     
-    p.add_tools(HoverTool(tooltips=tooltips))
+    plots.add_tools(HoverTool(tooltips=tooltips))
 
-    return p
+    return plots
 
 def update_country(attr, old, new):
     lokasi_plot = [lokasi_selection.labels[i] for i in lokasi_selection.active]
@@ -73,9 +73,9 @@ def update_country(attr, old, new):
 def update_fitur(attr, old, new):
     lokasi_plot = [lokasi_selection.labels[i] for i in lokasi_selection.active]
     
-    feature = fiturSelect.value
+    fitur = fiturSelect.value
     
-    new_src = make_dataset(lokasi_plot, feature)
+    new_src = make_dataset(lokasi_plot, fitur)
 
     src.data.update(new_src.data)
 
@@ -83,19 +83,19 @@ def update_fitur(attr, old, new):
 def tab_barplot(data):
     
     source = ColumnDataSource(data)
-    p = figure(y_range=data['Location'], 
+    plots = figure(y_range=data['Location'], 
                title="Jumlah Kasus Tiap Provinsi",
                plot_height=800,
                
                plot_width=800,
                toolbar_location=None)
 
-    p.hbar(y='Location', right='Total Cases', source=source, height=1)
+    plots.hbar(y='Location', right='Total Cases', source=source, height=1)
 
-    p.x_range.start = 0
-    p.xaxis.formatter = NumeralTickFormatter(format="0")
+    plots.x_range.start = 0
+    plots.xaxis.formatter = NumeralTickFormatter(format="0")
     
-    return Panel(child=p, title="BAR PLOT")
+    return Panel(child=plots, title="BAR PLOT")
 
 df_province = df.groupby(['Location']).sum()
 df_province = df_province.reset_index()
@@ -103,7 +103,7 @@ df_province = df_province.reset_index()
 lokasi_selection = CheckboxGroup(labels=lokasi, active = [0])
 lokasi_selection.on_change('active', update_country)
 
-fiturSelect = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature Select')
+fiturSelect = Select(options = col_list[2:], value = 'Total Cases', title = 'fitur Select')
 fiturSelect.on_change('value', update_fitur)
 
 initial_country = [lokasi_selection.labels[i] for i in lokasi_selection.active]
