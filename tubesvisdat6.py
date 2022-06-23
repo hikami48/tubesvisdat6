@@ -87,11 +87,6 @@ lokasi_selection.on_change('active', update_country)
 feature_select = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature 1')
 feature_select.on_change('value', update_feature)
 
-#fitur 2
-feature_select2 = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature 2')
-feature_select2.on_change('value', update_feature)
-
-#end fitur 2
 
 initial_country = [lokasi_selection.labels[i] for i in lokasi_selection.active]
 
