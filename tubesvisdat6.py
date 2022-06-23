@@ -76,6 +76,9 @@ def tab_barplot(data):
     
     return Panel(child=p, title="BAR PLOT")
 
+df_province = data.groupby(['Location']).sum()
+df_province = df_province.reset_index()
+
 def update_country(attr, old, new):
     lokasi_plot = [lokasi_selection.labels[i] for i in lokasi_selection.active]
 
@@ -102,7 +105,7 @@ feature_select.on_change('value', update_feature)
 initial_country = [lokasi_selection.labels[i] for i in lokasi_selection.active]
 
 src = make_dataset(initial_country, feature_select.value)
-
+bar = tab_barplot(df_province)
 p = make_plot(src, feature_select.value)
 
 controls = WidgetBox(feature_select, lokasi_selection)
