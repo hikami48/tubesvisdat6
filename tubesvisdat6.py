@@ -2,7 +2,7 @@ import pandas as pd
 from bokeh.plotting import figure
 from bokeh.plotting import show
 from bokeh.io import curdoc
-from bokeh.models import ColumnDataSource, HoverTool, Select
+from bokeh.models import ColumnDataSource, HoverTool, Select,NumeralTickFormatter
 from bokeh.models.widgets import Tabs, Panel
 from bokeh.layouts import row, widgetbox
 from bokeh.palettes import Category20_16
@@ -60,6 +60,21 @@ def make_plot(src, feature):
 
     return p
 
+def tab_barplot(data):
+    
+    source = ColumnDataSource(data)
+    p = figure(y_range=data['Location'], 
+               title="Jumlah Kasus Tiap Provinsi",
+               plot_height=800,
+               plot_width=800,
+               toolbar_location=None)
+
+    p.hbar(y='Location', right='Total Cases', source=source, height=1)
+
+    p.x_range.start = 0
+    p.xaxis.formatter = NumeralTickFormatter(format="0")
+    
+    return Panel(child=p, title="BAR PLOT")
 
 def update_country(attr, old, new):
     lokasi_plot = [lokasi_selection.labels[i] for i in lokasi_selection.active]
