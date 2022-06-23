@@ -47,7 +47,7 @@ def make_dataset(lokasi, fitur):
 
 def make_plot(src, fitur):
     
-    plots = figure(plot_width = 700, plot_height = 400, 
+    plots = figure(plot_width = 800, plot_height = 800, 
             title = 'Kasus Covid-19 di Indonesia',
             x_axis_label = 'Date', y_axis_label = 'fitur Selected')
 
@@ -94,11 +94,18 @@ def tab_barplot(data):
 
     plots.x_range.start = 0
     plots.xaxis.formatter = NumeralTickFormatter(format="0")
+    tooltips = [
+            ('Location','$x'),
+            ('Total Case', '$y'),
+           ]
+    
+    plots.add_tools(HoverTool(tooltips=tooltips))
+    
     
     return Panel(child=plots, title="BAR PLOT")
 
-df_province = df.groupby(['Location']).sum()
-df_province = df_province.reset_index()
+df_provinsi = df.groupby(['Location']).sum()
+df_provinsi = df_provinsi.reset_index()
 
 lokasi_selection = CheckboxGroup(labels=lokasi, active = [0])
 lokasi_selection.on_change('active', update_country)
@@ -118,7 +125,7 @@ controls = WidgetBox(fiturSelect, lokasi_selection)
 # Create a row layout
 layout = row(controls, Plots)
 first_panel = Panel(child=layout, title='GRAFIK')
-bar = tab_barplot(df_province)
+bar = tab_barplot(df_provinsi)
 tabs = Tabs(tabs=[ first_panel, bar])
 #Adding the layout to the current document
 curdoc().theme = 'dark_minimal'
