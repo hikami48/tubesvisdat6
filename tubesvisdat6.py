@@ -47,7 +47,7 @@ def make_dataset(lokasi, fitur):
 
 def make_plot(src, fitur):
     
-    plots = figure(plot_width = 800, plot_height = 800, 
+    plots = figure(plot_width = 800, plot_height = 600, 
             title = 'Kasus Covid-19 di Indonesia',
             x_axis_label = 'Date', y_axis_label = 'fitur Selected')
 
@@ -95,8 +95,8 @@ def tab_barplot(data):
     plots.x_range.start = 0
     plots.xaxis.formatter = NumeralTickFormatter(format="0")
     tooltips = [
-            ('Location','$x'),
-            ('Total Case', '$y'),
+            ('Location','$y'),
+            ('Total Case', '$right'),
            ]
     
     plots.add_tools(HoverTool(tooltips=tooltips))
