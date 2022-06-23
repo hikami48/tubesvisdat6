@@ -98,7 +98,7 @@ def update_feature(attr, old, new):
 
 
 lokasi_selection  = RadioGroup(labels=lokasi, active=0)
-lokasi_selection.on_change('active', update_country)
+lokasi_selection.on_change('value', update_country)
 
 feature_select = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature Select')
 feature_select.on_change('value', update_feature)
