@@ -12,7 +12,7 @@ from bokeh.layouts import column, row, WidgetBox
 df = pd.read_csv("./data/covid_19_indonesia_time_series_all.csv")
 df["Date"] = pd.to_datetime(df["Date"])
 data = df[df["Location"].str.contains("Indonesia")==False]
-data = data[['Date', 'Location', 'Total Cases', 'Total Deaths', 'Total Recovered', 'Total Active Cases']]
+data = data[['Date', 'Location', 'Total Cases', 'Total Deaths', 'Total Recovered', 'Total Active Cases', 'Island']]
 
 lokasi = list(data.Location.unique())
 
